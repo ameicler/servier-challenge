@@ -21,7 +21,7 @@ The proposed application can be used for **retrieving a model's prediction**, fo
 
 This model takes the extracted features of a molecule as input and predict the P1 property. The 2048 extracted fingerprint features retrieved from  `feature_extractor.py` module will served as input for this model.
 
-We propose a simple **1D Convolutional Neural Network (CNN)** for addressing this task. Below we provide the details of chosen architecture:
+We propose a simple **1D Convolutional Neural Network (CNN)** for addressing this task. Below we provide the details of the chosen architecture:
 
 ```
 _________________________________________________________________
@@ -49,7 +49,7 @@ Non-trainable params: 384
 _________________________________________________________________
 ```
 
-This model will not appear successful at solving this task, as we achieve 82% accuracy on the test set (20% stratified sampled from the original dataset) with 100% of the predictions being positive (so the model always guess 1 - most likely due to class imbalance).
+This model will not appear successful at solving this task, as we achieve only 82% accuracy on the test set (20% stratified sampled from the original dataset). As a matter of fact, 100% of the predictions are positive, which means the model always guess 1 (most likely due to class imbalance) and which indicates we should aim/explore for a more complex architecture.
 
 In order to tackle the entirety of the technical test and to deliver a complete/functional application, we choose to set aside the issue of the performance of the model for now and to address the rest of the objectives.
 
@@ -63,13 +63,13 @@ Given more time, here are some possible areas to look at for improving model per
 
 This model takes the SMILE string character as input and predict the P1 property.
 
-Here, we chose to address this problem from a different perspective and to classify P1 property of the molecule based on the image of the molecule (obtained based on SMILE string)
+Here, we choose to address this problem from a different perspective and to classify P1 property of the molecule based on the image of the molecule (obtained based on SMILE string)
 
 For example here is the molecule representation of `C-C(Cl)=C-CC1(CN2CCCC2=O)C(=O)NC(=O)NC1=O`:
 
 ![](docs/molecule_img.png)
 
-Here we choose to finetune the top layers of a a pre-trained network ([VGG16](https://neurohive.io/en/popular-networks/vgg16/))
+In order to build this molecule image classifier, we propoose to finetune the top layers of the existing and popular pre-trained network [VGG16](https://neurohive.io/en/popular-networks/vgg16/) :
 
 ```
 _________________________________________________________________
@@ -121,7 +121,11 @@ _________________________________________________________________
 
 This time, the model achieves a poor accuracy of 71% on the test set after a few epochs. In order to improve this performance, we could try some augmentation techniques (in addition to existing horizontal/vertical flip), retrain the model from scratch (not only the top layers), address class imbalance, etc.
 
-One can note than in order to train and evaluate the model, an extra step of saving molecules image (based on SMILE string) is needed.
+One can note than in order to train and evaluate this model, an extra step of saving molecules image (based on SMILE string) is needed.
+
+### C/ Models checkpoint
+
+You can download the models h5 checkpoint at [this address](https://drive.google.com/drive/folders/1XjKIaNzsXatpmJMGacaP5Xs6od2iRjGR?usp=sharing) and save them in `models/` directory at the root of your application.
 
 ## III. Usage
 
@@ -146,6 +150,8 @@ The Flask server will then be running and you should be able to POST a request t
 ``` bash
 # Retrieving a prediction for a given smile and using model 2
 curl -d "smile=Cc1cccc(N2CCN(C(=O)C34CC5CC(CC(C5)C3)C4)CC2)c1C&model_name=2" -X POST http://localhost:5000/predict
+
+# {"P1_pred":"1.0","success":true}
 ```
 
 You can also enter and inspect the container interactively:
@@ -223,3 +229,4 @@ This minimal application can either be run as a flask server that will receive A
 - proper application logging
 - documentation of the functions and clean comments
 - unit tests
+- ...
