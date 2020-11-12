@@ -13,12 +13,12 @@ from rdkit.Chem.Draw import MolToFile
 from rdkit.Chem import MolFromSmiles
 
 from src.utils.data import load_and_prepare_data
-from src.utils.feature_extractor import fingerprint_features
+from src.utils.feature_extractor import fingerprint_features, generate_all_images
 
 
 def create_model_1(input_length=2048):
     model = Sequential()
-    model.add(Embedding(1024+1, 50, input_length=input_length))
+    model.add(Embedding(1024, 50, input_length=input_length))
     model.add(Conv1D(192, 10, activation='relu'))
     model.add(BatchNormalization())
     model.add(Conv1D(192, 3, activation='relu'))
@@ -66,7 +66,7 @@ def train_model(data_dir="../data", models_dir="../models", model_name="2",
     epochs=2, batch_size=32, target_size=(224, 224)):
 
     print("Loading data in order to train model")
-    X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir)
+    X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir, model_name)
 
     assert model_name in ["1", "2"], print("Argument `model` must be either 1 or 2")
 
@@ -80,8 +80,15 @@ def train_model(data_dir="../data", models_dir="../models", model_name="2",
     elif model_name == "2":
         print("Creating model 2")
         model = create_model_2(target_size=target_size)
-        train_data_dir = os.path.join(data_dir, "smile_images/train")
-        validation_data_dir = os.path.join(data_dir, "smile_images/test")
+        img_dir = os.path.join(data_dir, "smile_images")
+        train_data_dir = os.path.join(img_dir, "train")
+        validation_data_dir = os.path.join(img_dir, "test")
+
+        if not(os.path.isdir(train_data_dir)):
+            generate_all_images(X_train, y_train, X_test, y_test, img_dir,
+                target_size=target_size)
+        else:
+            print("Image directory exists - no need to generate images")
 
         model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics=['accuracy'])
 
@@ -111,14 +118,15 @@ def train_model(data_dir="../data", models_dir="../models", model_name="2",
             validation_steps=len(y_test) // batch_size)
 
     print("Finished model training. Saving h5")
-    model_path = os.path.join(models_dir, "model_{}".format(model_name) + \
-        time.strftime("%Y%m%d") + ".h5")
+    model_path = os.path.join(models_dir, "model_{}".format(model_name) + ".h5")
+    if not(os.path.isdir(models_dir)):
+        os.mkdir(models_dir)
     model.save(model_path)
     print("Model saved @ {}").format(model_path)
     return
 
 
-def evaluate_model(data_dir="../data", model_path="../models/model2_1112.h5",
+def evaluate_model(data_dir="../data", model_path="../models/model_2.h5",
     model_name="2", target_size=(224, 224), batch_size=32):
     print("Evaluating model")
     model = load_model(model_path)
@@ -149,8 +157,8 @@ def evaluate_model(data_dir="../data", model_path="../models/model2_1112.h5",
     return
 
 
-def load_models(model_1_path="../models/model1_1112.h5",
-    model_2_path="../models/model2_1112.h5"):
+def load_models(model_1_path="../models/model_1.h5",
+    model_2_path="../models/model_2.h5"):
     print("Loading models 1 and 2")
     # load the trained Keras model
     global model_1, model_2

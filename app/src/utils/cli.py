@@ -11,8 +11,8 @@ def cli(*args, **kwargs):
 
 @cli.command()
 @click.argument("smile")
-@click.option("--model_1_path", default="../models/cnn_1d_1110.h5", help="Path of the model 1 checkpoint")
-@click.option("--model_2_path", default="../models/model2_1112.h5", help="Path of the model 2 checkpoint")
+@click.option("--model_1_path", default="../models/model_1.h5", help="Path of the model 1 checkpoint")
+@click.option("--model_2_path", default="../models/model_2.h5", help="Path of the model 2 checkpoint")
 @click.option("--model_name", default="2", help="Model to be used for retrieving prediction")
 def predict(smile, model_1_path, model_2_path, model_name):
     """
@@ -32,7 +32,7 @@ def train(data_dir, model_name):
 
 @cli.command()
 @click.option("--data_dir", default="../data", help="Path of the data directory")
-@click.option("--model_path", default="../models/model2_1112.h5", help="Path of the model to be evaluated")
+@click.option("--model_path", default="../models/model_2.h5", help="Path of the model to be evaluated")
 @click.option("--model_name", default="2", help="Model to be evaluated")
 def evaluate(data_dir, model_path, model_name):
     """
