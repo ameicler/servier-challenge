@@ -30,7 +30,7 @@ def create_model_1(input_length=2048):
     return model
 
 
-def create_model_2(target_size=(224, 224)):
+def create_model_2(target_size=(90, 90)):
     img_width, img_height = target_size
     input_shape = (img_width, img_height, 3)
     input_tensor = Input(shape=input_shape)
@@ -63,7 +63,7 @@ def create_model_2(target_size=(224, 224)):
 
 
 def train_model(data_dir="../data", models_dir="../models", model_name="2",
-    epochs=2, batch_size=32, target_size=(224, 224)):
+    epochs=2, batch_size=32, target_size=(90, 90)):
 
     print("Loading data in order to train model")
     X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir, model_name)
@@ -127,7 +127,7 @@ def train_model(data_dir="../data", models_dir="../models", model_name="2",
 
 
 def evaluate_model(data_dir="../data", model_path="../models/model_2.h5",
-    model_name="2", target_size=(224, 224), batch_size=32):
+    model_name="2", target_size=(90, 90), batch_size=32):
     print("Evaluating model")
     model = load_model(model_path)
     X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir)
@@ -185,8 +185,8 @@ def smile_to_pred(smile, model_1, model_2, model_name="1"):
         print("Prediction based on model 2 (Mol image)")
         fp = tempfile.NamedTemporaryFile(suffix=".png")
         molsmile = MolFromSmiles(smile_str)
-        MolToFile(molsmile, fp.name, size = (224, 224))
-        img = load_img(fp.name, target_size=(224, 224))
+        MolToFile(molsmile, fp.name, size = (90, 90))
+        img = load_img(fp.name, target_size=(90, 90))
         input_arr = img_to_array(img)
         input_arr = np.array([input_arr])  # Convert single image to a batch.
         preds = model_2.predict(input_arr)

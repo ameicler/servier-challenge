@@ -49,7 +49,7 @@ Non-trainable params: 384
 _________________________________________________________________
 ```
 
-This model will not appear successful at solving this task, as we achieve only 82% accuracy on the test set (20% stratified sampled from the original dataset). As a matter of fact, 100% of the predictions are positive, which means the model always guess 1 (most likely due to class imbalance) and which indicates we should aim/explore for a more complex architecture.
+This model does not appear successful at solving this task, as we achieve only 82.20% accuracy on the test set (20% stratified sampled from the original dataset). As a matter of fact, 100% of the predictions are positive, which means the model always guess 1 (most likely due to class imbalance) and which indicates we should aim/explore for a more complex architecture.
 
 In order to tackle the entirety of the technical test and to deliver a complete/functional application, we choose to set aside the issue of the performance of the model for now and to address the rest of the objectives.
 
@@ -119,7 +119,7 @@ Non-trainable params: 21,137,729
 _________________________________________________________________
 ```
 
-This time, the model achieves a poor accuracy of 71% on the test set after a few epochs. In order to improve this performance, we could try some augmentation techniques (in addition to existing horizontal/vertical flip), retrain the model from scratch (not only the top layers), address class imbalance, etc.
+This time, the model achieves 82.56% on the test set after a few epochs. In order to improve this performance, we could try some augmentation techniques (in addition to existing horizontal/vertical flip), retrain the model from scratch (not only the top layers), address class imbalance, test different hyperparameters, etc.
 
 One can note than in order to train and evaluate this model, an extra step of saving molecules image (based on SMILE string) is needed.
 
@@ -161,7 +161,7 @@ The Flask server will then be running and you should be able to POST a request t
 # Retrieving a prediction for a given smile and using model 2
 curl -d "smile=Cc1cccc(N2CCN(C(=O)C34CC5CC(CC(C5)C3)C4)CC2)c1C&model_name=2" -X POST http://localhost:5000/predict
 
-# {"P1_pred":"1.0","success":true}
+# {"P1_pred":"0.8614194","success":true}
 ```
 
 You can also enter and inspect the container interactively:
