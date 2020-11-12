@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import flask
 
-from src.utils.model import load_models, smile_to_pred
+from utils.model import load_models, smile_to_pred
 
 # Initialize our Flask application and the Keras model
 app = flask.Flask(__name__)

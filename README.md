@@ -131,10 +131,20 @@ You can download the models h5 checkpoint at [this address](https://drive.google
 
 ### A/ Setup
 
-In order to install and use the application, you can simply build it using Docker.  🐳
+In order to install and use the application, you can simply build it using Docker 🐳 :
 
 ``` bash
 docker build . -t servier
+```
+
+Or you can also install it locally if you have conda and Pip installed 🐍 :
+``` bash
+conda update -n base conda \
+  && conda create -y --name servier python=3.6 \
+  && activate servier \
+  && conda install -c conda-forge rdkit
+pip install -r requirements.txt
+python setup.py
 ```
 
 ### B/ Flask server
@@ -229,4 +239,5 @@ This minimal application can either be run as a flask server that will receive A
 - proper application logging
 - documentation of the functions and clean comments
 - unit tests
+- more parameters options in CLI
 - ...

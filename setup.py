@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     author="Antoine Meicler",
@@ -6,9 +6,11 @@ setup(
     name='servier-pkg-ameicler',
     author_email="a.meicler@gmail.com",
     python_requires='>=3.6',
+    package_dir={"": "src"},
+    packages=find_packages("src"),
     entry_points={
         'console_scripts': [
-            "servier=src.utils.cli:cli"
+            "servier=utils.cli:cli"
         ],
     }
 )

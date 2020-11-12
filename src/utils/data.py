@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from src.utils.feature_extractor import fingerprint_features
+from utils.feature_extractor import fingerprint_features
 
 
 def load_and_prepare_data(data_dir="data", model_name="2"):

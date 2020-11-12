@@ -1,6 +1,6 @@
 import click
 
-from src.utils.model import load_models, train_model, evaluate_model, smile_to_pred
+from utils.model import load_models, train_model, evaluate_model, smile_to_pred
 
 
 @click.group("servier")

@@ -12,11 +12,11 @@ RUN conda update -n base conda \
   && activate servier \
   && conda install -c conda-forge rdkit
 
-ADD app /app
+ADD src /app
 WORKDIR /app
 
 RUN pip install -r requirements.txt
-RUN python setup.py develop
+RUN python setup.py install
 
 EXPOSE 5000
 

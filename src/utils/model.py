@@ -12,8 +12,8 @@ from keras.applications import VGG16
 from rdkit.Chem.Draw import MolToFile
 from rdkit.Chem import MolFromSmiles
 
-from src.utils.data import load_and_prepare_data
-from src.utils.feature_extractor import fingerprint_features, generate_all_images
+from utils.data import load_and_prepare_data
+from utils.feature_extractor import fingerprint_features, generate_all_images
 
 
 def create_model_1(input_length=2048):
@@ -122,7 +122,7 @@ def train_model(data_dir="../data", models_dir="../models", model_name="2",
     if not(os.path.isdir(models_dir)):
         os.mkdir(models_dir)
     model.save(model_path)
-    print("Model saved @ {}").format(model_path)
+    print("Model saved @ {}".format(model_path))
     return
 
 
