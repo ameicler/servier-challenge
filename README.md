@@ -199,8 +199,11 @@ Usage: servier train [OPTIONS]
   Options:
   --data_dir   TEXT  Path to the data directory
   --model_name TEXT  Model to be trained
+  --epochs     TEXT  Number of epochs to train the model
   --help             Show this message and exit.
 ```
+
+For example: `servier train --model_name 2`
 
 - **Evaluate model**
 ``` bash
@@ -215,6 +218,8 @@ Usage: servier evaluate [OPTIONS]
     --help             Show this message and exit.
 ```
 
+For example: `servier evaluate --model_path ../models/model_2.h5 --model_name 2`
+
 - **Retrieve prediction**
 ``` bash
 Usage: servier predict [OPTIONS] SMILE
@@ -227,6 +232,8 @@ Usage: servier predict [OPTIONS] SMILE
     --model_name TEXT    Model to be used for retrieving prediction
     --help               Show this message and exit.
 ```
+
+For example: `servier predict "Cc1cccc(N2CCN(C(=O)C34CC5CC(CC(C5)C3)C4)CC2)c1C" --model_name 1`
 
 ## Conclusion
 

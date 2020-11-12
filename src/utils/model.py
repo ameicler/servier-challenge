@@ -63,7 +63,7 @@ def create_model_2(target_size=(90, 90)):
 
 
 def train_model(data_dir="../data", models_dir="../models", model_name="2",
-    epochs=2, batch_size=32, target_size=(90, 90)):
+    epochs=10, batch_size=32, target_size=(90, 90)):
 
     print("Loading data in order to train model")
     X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir, model_name)
@@ -130,7 +130,7 @@ def evaluate_model(data_dir="../data", model_path="../models/model_2.h5",
     model_name="2", target_size=(90, 90), batch_size=32):
     print("Evaluating model")
     model = load_model(model_path)
-    X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir)
+    X_train, X_test, y_train, y_test = load_and_prepare_data(data_dir, model_name=model_name)
 
     assert model_name in ["1", "2"], print("Argument `model` must be either 1 or 2")
 

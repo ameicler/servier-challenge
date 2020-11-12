@@ -24,11 +24,12 @@ def predict(smile, model_1_path, model_2_path, model_name):
 @cli.command()
 @click.option("--data_dir", default="../data", help="Path of the data directory")
 @click.option("--model_name", default="2", help="Model to be trained")
-def train(data_dir, model_name):
+@click.option("--epochs", default="10", help="Number of epochs for training the model")
+def train(data_dir, model_name, epochs):
     """
     Train model from scratch.
     """
-    train_model(data_dir=data_dir, model_name=model_name)
+    train_model(data_dir=data_dir, model_name=model_name, epochs=epochs)
 
 @cli.command()
 @click.option("--data_dir", default="../data", help="Path of the data directory")
